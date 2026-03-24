@@ -20,9 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Update Button toggle
+        // Update Button toggle — show current language, and set tooltip to full name
+        const fullName = lang === 'en' ? 'English' : 'Español';
+        const abbr = lang === 'en' ? 'EN' : 'ES';
         langBtns.forEach(btn => {
-            btn.textContent = lang === 'en' ? 'ES' : 'EN';
+            btn.textContent = abbr;
+            btn.setAttribute('data-label', fullName);
         });
     }
 
@@ -30,19 +33,64 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('capyside-lang') || defaultLang;
     setLanguage(savedLang);
 
-    langBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const currentLang = localStorage.getItem('capyside-lang') || defaultLang;
-            const newLang = currentLang === 'en' ? 'es' : 'en';
-            setLanguage(newLang);
+    // Build a shared dropdown element
+    const langDropdown = document.createElement('div');
+    langDropdown.className = 'lang-dropdown';
+    langDropdown.innerHTML = `
+        <button class="lang-option" data-lang="en">English</button>
+        <button class="lang-option" data-lang="es">Español</button>
+    `;
+    document.body.appendChild(langDropdown);
+
+    let activeBtn = null;
+
+    function closeLangDropdown() {
+        langDropdown.classList.remove('open');
+        activeBtn = null;
+    }
+
+    langDropdown.querySelectorAll('.lang-option').forEach(opt => {
+        opt.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setLanguage(opt.dataset.lang);
+            closeLangDropdown();
         });
     });
+
+    langBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const isMobile = window.innerWidth <= 1024;
+
+            if (isMobile) {
+                e.stopPropagation();
+                if (langDropdown.classList.contains('open') && activeBtn === btn) {
+                    // Toggle off if same button
+                    closeLangDropdown();
+                } else {
+                    // Position dropdown below this button
+                    const rect = btn.getBoundingClientRect();
+                    langDropdown.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+                    langDropdown.style.left = rect.left + 'px';
+                    langDropdown.classList.add('open');
+                    activeBtn = btn;
+                }
+            } else {
+                // Desktop: single click switches immediately
+                const currentLang = localStorage.getItem('capyside-lang') || defaultLang;
+                const newLang = currentLang === 'en' ? 'es' : 'en';
+                setLanguage(newLang);
+            }
+        });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', closeLangDropdown);
 
     /* --- NAVBAR & SCROLL MENU --- */
     const navbar = document.getElementById('navbar');
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.getElementById('nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link, .nav-actions .btn');
+    const navLinks = document.querySelectorAll('.nav-link, .nav-actions .btn:not(.lang-btn)');
 
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {

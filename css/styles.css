@@ -157,6 +157,80 @@ img {
   color: var(--color-black);
 }
 
+/* Language button tooltip on hover */
+.lang-btn {
+  position: relative;
+  overflow: visible;
+  transition: all 0.25s ease;
+}
+
+.lang-btn::before {
+  content: attr(data-label);
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border: 1px solid rgba(255, 249, 238, 0.2);
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 9999;
+}
+
+.lang-btn:hover::before {
+  opacity: 1;
+}
+
+/* Language Dropdown (mobile) */
+.lang-dropdown {
+  display: none;
+  position: absolute;
+  z-index: 10000;
+  background-color: var(--color-gray);
+  border: 1px solid rgba(255, 249, 238, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.15s ease;
+}
+
+.lang-dropdown.open {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.lang-option {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 1.2rem;
+  background: none;
+  border: none;
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.lang-option:hover,
+.lang-option:active {
+  background-color: rgba(255, 249, 238, 0.1);
+  color: var(--color-red);
+}
+
 .btn-outline-white {
   background-color: transparent;
   border-color: var(--color-white);
@@ -869,9 +943,27 @@ img {
   }
 
   .mobile-lang-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 8px;
-    padding: 0.5rem 1.2rem;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-lang-btn.pending {
+    display: none; /* No longer used — dropdown replaces this */
+  }
+
+  /* Disable hover tooltip on mobile — dropdown is used instead */
+  .lang-btn::before {
+    display: none;
   }
 
   .mobile-logo {
