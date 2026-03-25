@@ -24,6 +24,7 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -248,7 +249,7 @@ img {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   background-color: rgba(33, 36, 43, 0.85);
   /* --color-black */
   backdrop-filter: blur(10px);
@@ -341,12 +342,12 @@ img {
 
 /* --- HERO --- */
 .hero {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   background-color: var(--color-black);
-  padding-top: 80px;
-  /* Offset for navbar */
+  padding-top: 120px;
+  padding-bottom: 4rem;
+  /* Offset for fixed navbar */
   position: relative;
   overflow: hidden;
   z-index: 10;
@@ -899,6 +900,17 @@ img {
     font-size: 3.5rem;
   }
 
+  /* Tighten navbar on tablet */
+  .navbar {
+    padding: 0.75rem 0;
+  }
+
+  /* Reduce hero top spacing for tablet */
+  .hero {
+    padding-top: 90px;
+    padding-bottom: 3rem;
+  }
+
   .cards-container {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1015,9 +1027,12 @@ img {
     border-radius: 8px !important;
   }
 
+  /* Reduce hero padding for mobile */
   .hero {
     position: relative;
     overflow: hidden;
+    padding-top: 80px;
+    padding-bottom: 2rem;
   }
 
   .hero-container {
