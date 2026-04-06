@@ -75,7 +75,7 @@ const translations = {
 
         "btn.started": "Get Started",
 
-        "footer.location": "Mendoza - Córdoba, Argentina",
+        "footer.location": "Argentina",
         "footer.contact": "Contact Us",
         "footer.bookCall": "Book a Call",
         "footer.rights": "© 2026 Capyside. All Rights Reserved.",
@@ -159,7 +159,7 @@ const translations = {
 
         "btn.started": "Empezar Ahora",
 
-        "footer.location": "Mendoza - Córdoba, Argentina",
+        "footer.location": "Argentina",
         "footer.contact": "Contáctanos",
         "footer.bookCall": "Agendar Llamada",
         "footer.rights": "© 2026 Capyside. Todos los derechos reservados.",
