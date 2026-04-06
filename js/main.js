@@ -248,4 +248,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* --- CALENDLY POPUP LOGIC --- */
+    const calendlyButtons = document.querySelectorAll('.book-call-btn, .hero-btn, .footer-btn');
+    const calendlyUrl = 'https://calendly.com/capysideinfo/30min';
+
+    calendlyButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (typeof Calendly !== 'undefined') {
+                Calendly.initPopupWidget({ 
+                    url: calendlyUrl,
+                    color: '#ff4848', // Capyside Red
+                    textColor: '#ffffff',
+                    branding: false
+                });
+            } else {
+                window.open(calendlyUrl, '_blank');
+            }
+            return false;
+        });
+    });
+
 });
