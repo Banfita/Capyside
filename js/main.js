@@ -188,12 +188,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* --- SWIPER CAROUSEL --- */
     const track = document.getElementById('carouselTrack');
+    const customImages = [
+        'images/Branding_00.webp',
+        'images/dashboardUI_00.webp',
+        'images/fintechappUI_00.webp',
+        'images/saaslanding_00.webp'
+    ];
     const totalImages = 7;
 
     for (let i = 1; i <= totalImages; i++) {
         const slide = document.createElement('div');
         slide.className = 'swiper-slide carousel-slide';
-        slide.innerHTML = `<img src="https://picsum.photos/800/600?random=${i}" loading="lazy" alt="Work sample ${i}">`;
+        const src = i <= customImages.length ? customImages[i-1] : `https://picsum.photos/800/600?random=${i}`;
+        slide.innerHTML = `<img src="${src}" loading="lazy" alt="Work sample ${i}">`;
         track.appendChild(slide);
     }
 
